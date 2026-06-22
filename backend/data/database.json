@@ -1,0 +1,51 @@
+{
+  "admin": {
+    "email": "admin@bank.local",
+    "password": "admin123",
+    "name": "Bank Administrator"
+  },
+  "accounts": [
+    {
+      "accountNumber": "ACC-1001",
+      "name": "Amina Rahman",
+      "phone": "01711000001",
+      "email": "amina@example.com",
+      "address": "Dhaka, Bangladesh",
+      "nominee": "Rahim Rahman",
+      "pin": "1234",
+      "status": "Active",
+      "balance": 25000,
+      "createdAt": "2026-06-01T08:00:00.000Z"
+    },
+    {
+      "accountNumber": "ACC-1002",
+      "name": "Sakib Hasan",
+      "phone": "01711000002",
+      "email": "sakib@example.com",
+      "address": "Chattogram, Bangladesh",
+      "nominee": "Fatema Hasan",
+      "pin": "5678",
+      "status": "Active",
+      "balance": 18250,
+      "createdAt": "2026-06-04T10:30:00.000Z"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "TXN-0001",
+      "type": "Deposit",
+      "accountNumber": "ACC-1001",
+      "amount": 5000,
+      "note": "Opening deposit",
+      "createdAt": "2026-06-01T08:00:00.000Z"
+    },
+    {
+      "id": "TXN-0002",
+      "type": "Deposit",
+      "accountNumber": "ACC-1002",
+      "amount": 3000,
+      "note": "Cash deposit",
+      "createdAt": "2026-06-04T10:30:00.000Z"
+    }
+  ]
+}
