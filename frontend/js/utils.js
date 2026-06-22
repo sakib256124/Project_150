@@ -12,3 +12,33 @@ export function toast(message, type = 'success') {
 
 export function heading(eyebrow, title, description = '') { return `<div class="page-heading"><div><p class="eyebrow">${eyebrow}</p><h1>${title}</h1>${description ? `<p class="subtle">${description}</p>` : ''}</div></div>`; }
 export function empty(message) { return `<div class="empty">${message}</div>`; }
+
+export function currentBangladeshTime() {
+  return new Intl.DateTimeFormat('en-BD', { dateStyle: 'full', timeStyle: 'short', timeZone: 'Asia/Dhaka' }).format(new Date());
+}
+
+export function normalizeAccountInput(form) {
+  form.querySelectorAll('input[name="accountNumber"], input[name="fromAccount"], input[name="toAccount"]').forEach((input) => {
+    input.value = input.value.trim().toUpperCase();
+  });
+}
+
+export async function submitBankingForm(form, requestPath, confirmation, successMessage) {
+  const submitButton = form.querySelector('button[type="submit"], button:not([type])');
+  normalizeAccountInput(form);
+  const values = Object.fromEntries(new FormData(form));
+  if (!window.confirm(confirmation(values))) return null;
+  const originalLabel = submitButton.textContent;
+  submitButton.disabled = true;
+  submitButton.textContent = 'Processing…';
+  try {
+    const { apiRequest } = await import('./api.js');
+    const data = await apiRequest(requestPath, { method: 'POST', body: JSON.stringify(values) });
+    toast(successMessage(data));
+    form.reset();
+    return data;
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = originalLabel;
+  }
+}

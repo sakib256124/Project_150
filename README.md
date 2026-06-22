@@ -40,9 +40,10 @@ PROJECT_150/
 Open a terminal in the project root, then run:
 
 ```powershell
-cd backend
-node server.js
+npm start
 ```
+
+You can also run `node server.js` directly from the project root. The root entry point starts `backend/server.js` for you.
 
 Open **http://localhost:5000** in your browser. The backend serves the frontend automatically, so no second server is needed.
 

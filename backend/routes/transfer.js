@@ -1,10 +1,10 @@
 import { sendError, sendJson } from '../lib/http.js';
 import { accountForPin, addTransaction, isAccountFrozen, readDatabase, saveDatabase } from '../lib/store.js';
-import { positiveAmount } from '../lib/validation.js';
+import { accountNumber, positiveAmount } from '../lib/validation.js';
 
 export function handleTransfer(req, res, url, body) {
   if (req.method !== 'POST' || url.pathname !== '/api/transactions/transfer') return false;
-  const database = readDatabase(); const amount = positiveAmount(body.amount); const sender = accountForPin(database, body.fromAccount, body.pin); const receiver = database.accounts.find((account) => account.accountNumber === String(body.toAccount).trim());
+  const database = readDatabase(); const amount = positiveAmount(body.amount); const sender = accountForPin(database, body.fromAccount, body.pin); const receiver = database.accounts.find((account) => account.accountNumber === accountNumber(body.toAccount));
   if (!sender) sendError(res, 'Sender account number or PIN is incorrect.', 401);
   else if (isAccountFrozen(sender)) sendError(res, 'Sender account is frozen.');
   else if (!receiver) sendError(res, 'Receiver account was not found.');
